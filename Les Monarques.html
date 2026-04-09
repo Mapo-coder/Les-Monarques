@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Monarques - Forge of Empires</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --royal-blue: #0a192f;
+            --royal-gold: #d4af37;
+            --deep-red: #8b0000;
+            --text-light: #f4f4f4;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--royal-blue);
+            color: var(--text-light);
+            margin: 0;
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        /* Effet de particules d'or en arrière-plan */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #112240 0%, #0a192f 100%);
+        }
+
+        /* Header majestueux */
+        header {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.2), var(--royal-blue)),
+                        url('https://images.unsplash.com/photo-1599423423939-f9f257884d63?auto=format&fit=crop&q=80&w=1500');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 3px solid var(--royal-gold);
+        }
+
+        h1 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            color: var(--royal-gold);
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+            margin: 0;
+            letter-spacing: 5px;
+        }
+
+        .motto {
+            font-size: 1.5rem;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        /* Navigation Style "Luxe" */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 25, 47, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0; height: 2px;
+            bottom: -5px; left: 0;
+            background: var(--royal-gold);
+            transition: 0.3s;
+        }
+
+        nav a:hover::after { width: 100%; }
+        nav a:hover { color: var(--royal-gold); }
+
+        /* Conteneur et Cartes */
+        .container { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+
+        .royal-card {
+            background: var(--glass);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .royal-card::before {
+            content: '👑';
+            position: absolute;
+            top: -20px; right: -20px;
+            font-size: 10rem;
+            opacity: 0.05;
+        }
+
+        h2 {
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--royal-gold);
+            border-bottom: 2px solid var(--royal-gold);
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        /* Boutons stylés */
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--royal-gold);
+            color: var(--royal-gold);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: 0.4s;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            background: var(--royal-gold);
+            color: var(--royal-blue);
+            box-shadow: 0 0 20px var(--royal-gold);
+            transform: scale(1.05);
+        }
+
+        /* Grille des membres */
+        .grid-monarques {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .member-slot {
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid transparent;
+            transition: 0.3s;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .member-slot:hover {
+            border-color: var(--royal-gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        /* Bouton Thème */
+        #theme-btn {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 60px; height: 60px; border-radius: 50%;
+            background: var(--royal-gold); border: none;
+            cursor: pointer; font-size: 1.5rem; z-index: 2000;
+        }
+
+        footer { text-align: center; padding: 50px; opacity: 0.6; font-size: 0.8rem; }
+
+    </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<button id="theme-btn" onclick="changeTheme()">☀️</button>
+
+<header>
+    <div data-aos="zoom-in" data-aos-duration="1500">
+        <h1>Les Monarques</h1>
+        <div class="motto">Noblesse & Conquête</div>
+        <a href="#stats" class="cta-button">Entrer dans la Cour</a>
+    </div>
+</header>
+
+<nav>
+    <a href="#loi">Le Décret</a>
+    <a href="#stats">Le Royaume</a>
+    <a href="#membres">La Lignée</a>
+    <a href="#contact">Audiences</a>
+</nav>
+
+<div class="container">
+    
+    <section id="loi" class="royal-card" data-aos="fade-up">
+        <h2>Le Décret Royal</h2>
+        <p>Servir sous la bannière des Monarques exige rigueur et honneur. Voici nos piliers :</p>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin: 15px 0;">✨ <strong>L'Entraide :</strong> Un Monarque ne laisse jamais un pair dans le besoin.</li>
+            <li style="margin: 15px 0;">⚔️ <strong>Puissance Militaire :</strong> Participation active aux CBG et IQ exigée.</li>
+            <li style="margin: 15px 0;">⚖️ <strong>Équité :</strong> Commerce loyal au sein de la cour.</li>
+        </ul>
+    </section>
+
+    <section id="stats" class="royal-card" data-aos="fade-up">
+        <h2>État du Royaume</h2>
+        <p>Consultez les archives officielles de notre progression sur FOE Data :</p>
+        <a href="https://foe-data.ovh/world/fr17/guild/513946" target="_blank" class="cta-button">Voir les Statistiques</a>
+    </section>
+
+    <section id="membres" class="royal-card" data-aos="fade-up">
+        <h2>La Lignée (Membres)</h2>
+        <div class="grid-monarques">
+            <div class="member-slot">CoinCoinFoudroyé</div>
+            <div class="member-slot">ouuuaaaa</div>
+            <div class="member-slot">Crabi lapinou yeti</div>
+            <div class="member-slot">florentdu54</div>
+            <div class="member-slot">leodagan le sanguin</div>
+            <div class="member-slot">Le Paladin</div>
+        </div>
+    </section>
+
+    <section id="contact" class="royal-card" data-aos="zoom-in" style="text-align: center;">
+        <h2>Demande d'Audience</h2>
+        <p>Vous souhaitez rejoindre notre cour ou proposer un pacte diplomatique ?</p>
+        <a href="https://discord.gg/gcst6yuj4U" target="_blank" class="cta-button">Contacter le Royaume</a>
+    </section>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 Les Monarques - Forge of Empires | Design by CoinCoinFoudroyé</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+
+    // Système de particules d'or
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * 1 - 0.5;
+            this.opacity = Math.random();
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+        draw() {
+            ctx.fillStyle = `rgba(214, 175, 55, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function init() {
+        particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+    init();
+    animate();
+
+    // Switch de thème simple
+    function changeTheme() {
+        const body = document.body;
+        if(body.style.filter === 'invert(1)') {
+            body.style.filter = 'invert(0)';
+            document.getElementById('theme-btn').innerText = '☀️';
+        } else {
+            body.style.filter = 'invert(1)';
+            document.getElementById('theme-btn').innerText = '🌙';
+        }
+    }
+</script>
+
+</body>
+</html>
