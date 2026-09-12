@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les Monarques - Forge of Empires</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -76,6 +76,7 @@
             padding: 20px;
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 30px;
             border-bottom: 1px solid rgba(212, 175, 55, 0.3);
         }
@@ -134,6 +135,13 @@
             margin-bottom: 30px;
         }
 
+        h3.sub-heading {
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--royal-gold);
+            font-size: 1.3rem;
+            margin: 0 0 20px 0;
+        }
+
         /* Boutons stylés */
         .cta-button {
             display: inline-block;
@@ -154,6 +162,12 @@
             color: var(--royal-blue);
             box-shadow: 0 0 20px var(--royal-gold);
             transform: scale(1.05);
+        }
+
+        .cta-button.small {
+            padding: 8px 22px;
+            font-size: 0.75rem;
+            margin-top: 10px;
         }
 
         /* Grille des membres */
@@ -179,6 +193,31 @@
             background: rgba(212, 175, 55, 0.1);
         }
 
+        .member-slot .member-name {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .member-slot .member-name:hover {
+            color: var(--royal-gold);
+            text-decoration: underline;
+        }
+
+        .member-slot .member-title {
+            display: block;
+            font-weight: 400;
+            font-size: 0.7rem;
+            opacity: 0.65;
+            letter-spacing: 0;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+
+        .member-slot .member-title:hover {
+            opacity: 1;
+            color: var(--royal-gold);
+        }
+
         /* Bouton Thème */
         #theme-btn {
             position: fixed; bottom: 30px; right: 30px;
@@ -189,6 +228,280 @@
 
         footer { text-align: center; padding: 50px; opacity: 0.6; font-size: 0.8rem; }
 
+        /* Organisation côte à côte */
+        .membres-wrapper {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* On s'assure que la grille prend la majorité de l'espace */
+        .grid-monarques {
+            flex: 1;
+        }
+
+        /* Style de l'image à droite */
+        .royal-banner-container {
+            flex: 0 0 300px; /* Largeur de l'image */
+            position: relative;
+            border: 2px solid var(--royal-gold);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.4s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .royal-banner {
+            width: 100%;
+            display: block;
+            transition: 0.5s;
+        }
+
+        .royal-banner-container:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #fff;
+            box-shadow: 0 0 20px var(--royal-gold);
+        }
+
+        .royal-banner-container:hover .royal-banner {
+            filter: brightness(0.5) blur(2px);
+        }
+
+        /* Texte qui apparaît au survol de l'image */
+        .banner-overlay {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--royal-gold);
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.2rem;
+            text-align: center;
+            opacity: 0;
+            transition: 0.4s;
+            pointer-events: none;
+        }
+
+        .royal-banner-container:hover .banner-overlay {
+            opacity: 1;
+        }
+
+        /* Responsive : sur téléphone, on remet l'image en dessous */
+        @media (max-width: 768px) {
+            .membres-wrapper {
+                flex-direction: column;
+            }
+            .royal-banner-container {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Style de la fenêtre de profil (Modale) */
+        .modal-overlay {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); /* Fond sombre */
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid var(--royal-gold) !important;
+            animation: modalAppear 0.4s ease-out;
+            position: relative;
+        }
+
+        @keyframes modalAppear {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--royal-gold);
+            margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 0 15px var(--royal-gold);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 2rem;
+            color: var(--royal-gold);
+            cursor: pointer;
+        }
+
+        /* ===== Section Événements ===== */
+        .event-highlight {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .event-highlight-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .event-highlight-header .icon {
+            font-size: 2.5rem;
+        }
+
+        .event-tag {
+            display: inline-block;
+            background: var(--deep-red);
+            color: var(--text-light);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .artifact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .artifact-table th, .artifact-table td {
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        .artifact-table th {
+            color: var(--royal-gold);
+            font-family: 'Cinzel Decorative', cursive;
+            font-weight: 400;
+            font-size: 0.8rem;
+            background: rgba(212, 175, 55, 0.08);
+        }
+
+        .timeline {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-left: 2px solid rgba(212, 175, 55, 0.4);
+        }
+
+        .timeline li {
+            position: relative;
+            padding: 5px 0 25px 30px;
+        }
+
+        .timeline li::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--royal-gold);
+            box-shadow: 0 0 8px var(--royal-gold);
+        }
+
+        .timeline li.upcoming::before {
+            background: transparent;
+            border: 2px solid var(--royal-gold);
+        }
+
+        .timeline .ev-date {
+            display: block;
+            color: var(--royal-gold);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .timeline .ev-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .timeline .ev-reward {
+            font-size: 0.85rem;
+            opacity: 0.75;
+            display: block;
+            margin-top: 3px;
+        }
+
+        .timeline .ev-reward a {
+            color: var(--royal-gold);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--royal-gold);
+        }
+
+        .timeline .ev-reward a:hover { opacity: 0.8; }
+
+        .note-box {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            font-style: italic;
+            margin-top: 30px;
+            border-top: 1px dashed rgba(212, 175, 55, 0.3);
+            padding-top: 15px;
+        }
+
+        details.tips {
+            margin-top: 10px;
+        }
+
+        details.tips summary {
+            cursor: pointer;
+            color: var(--royal-gold);
+            font-size: 0.8rem;
+            font-weight: 700;
+            list-style: none;
+        }
+
+        details.tips summary::-webkit-details-marker { display: none; }
+
+        details.tips summary::before {
+            content: '▸ ';
+        }
+
+        details.tips[open] summary::before {
+            content: '▾ ';
+        }
+
+        details.tips ul {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+            font-size: 0.82rem;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+
+        details.tips li {
+            position: static;
+            padding: 0;
+            margin-bottom: 6px;
+        }
+
+        details.tips li::before {
+            content: none;
+        }
     </style>
 </head>
 <body>
@@ -207,12 +520,13 @@
 <nav>
     <a href="#loi">Le Décret</a>
     <a href="#stats">Le Royaume</a>
+    <a href="#evenements">Événements</a>
     <a href="#membres">La Lignée</a>
     <a href="#contact">Audiences</a>
 </nav>
 
 <div class="container">
-    
+
     <section id="loi" class="royal-card" data-aos="fade-up">
         <h2>Le Décret Royal</h2>
         <p>Servir sous la bannière des Monarques exige rigueur et honneur. Voici nos piliers :</p>
@@ -229,15 +543,250 @@
         <a href="https://foe-data.ovh/world/fr17/guild/513946" target="_blank" class="cta-button">Voir les Statistiques</a>
     </section>
 
+    <section id="evenements" class="royal-card" data-aos="fade-up">
+        <h2>Événements du Royaume</h2>
+        <p>Retrouvez ici l'artefact du moment ainsi que le calendrier des événements Forge of Empires, saison 2026 (Serveur Rugnir - FR).</p>
+
+        <div class="event-highlight" data-aos="fade-up">
+            <div class="event-highlight-header">
+                <span class="icon">🍁</span>
+                <h3 class="sub-heading" style="margin:0;">Hall de la Récolte 2026 <span class="event-tag">Événement Automnal en cours</span></h3>
+            </div>
+            <p>
+                Le <strong>Hall de la Récolte</strong> est la boutique d'objets de l'Événement Automnal 2026
+                (lancé le 31 août sur nos serveurs, thème japonais Momiji). En jouant au mini-jeu de pâtisserie,
+                vous gagnez des <strong>Sceaux du Boulanger</strong> à dépenser dans cette boutique pour choisir
+                vos récompenses.
+            </p>
+            <p>
+                Récompense exclusive du Hall de la Récolte : le <strong>Bar à Ramen</strong>, un bâtiment de
+                production spéciale disponible uniquement via cette boutique.
+            </p>
+            <table class="artifact-table">
+                <thead>
+                    <tr>
+                        <th>Bâtiment</th>
+                        <th>Taille</th>
+                        <th>Bonus</th>
+                        <th>Production / jour</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bar à Ramen - Niv. 1</td>
+                        <td>4x4 (sans route)</td>
+                        <td>+180% / +190% (2 ressources)</td>
+                        <td>90 (motivé)</td>
+                    </tr>
+                    <tr>
+                        <td>Bar à Ramen - Niv. 2</td>
+                        <td>4x4 (sans route)</td>
+                        <td>+260% / +240% / +210% (3 ressources)</td>
+                        <td>150 (motivé)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size:0.8rem; opacity:0.7;">
+                Grand Prix associé à cet événement : l'<strong>Arrêt Momiji</strong> (9 niveaux), améliorable en
+                Station Momiji (kit argent) puis Terminal Momiji (kit doré). Le classique
+                <strong>Cultures Dorées</strong> revient également, amélioré en Festin des Cultures.
+            </p>
+            <a href="https://fr.wiki.forgeofempires.com/index.php?search=Bar+%C3%A0+Ramen" target="_blank" class="cta-button small">Fiche Wiki : Bar à Ramen</a>
+            <a href="https://fr.wiki.forgeofempires.com/index.php?search=Arr%C3%AAt+Momiji" target="_blank" class="cta-button small">Fiche Wiki : Arrêt Momiji</a>
+        </div>
+
+        <h3 class="sub-heading">📅 Calendrier des Événements 2026</h3>
+        <ul class="timeline">
+            <li data-aos="fade-up">
+                <span class="ev-date">14 janvier - 4 février</span>
+                <span class="ev-name">Événement de la Faune</span>
+                <span class="ev-reward">Bâtiment principal : Grande Réserve d'Éléphants —
+                    <a href="https://fr.wiki.forgeofempires.com/index.php?search=Grande+R%C3%A9serve+d%27%C3%A9l%C3%A9phants" target="_blank">Fiche Wiki</a>
+                </span>
+                <details class="tips">
+                    <summary>💡 Conseils</summary>
+                    <ul>
+                        <li>Ne popez jamais au hasard : repérez les plus gros groupes de couleur avant de cliquer, ils remplissent bien plus vite les Coffres de récompense.</li>
+                        <li>Le Rival débloque désormais 1 quête/jour pendant 19 jours : faites-la en priorité, c'est de la monnaie garantie sans dépenser de diamants.</li>
+                        <li>Dans la boutique Fournitures Safari, priorisez les fragments du bâtiment principal plutôt que les boosters, sauf si vous êtes bloqué sur un plateau.</li>
+                    </ul>
+                </details>
+            </li>
+            <li data-aos="fade-up">
+                <span class="ev-date">17 février - 17 mars</span>
+                <span class="ev-name">Événement de la Saint-Patrick</span>
+                <span class="ev-reward">Bâtiment principal : Lochan Lune —
+                    <a href="https://fr.wiki.forgeofempires.com/index.php?search=Lochan+Lune" target="_blank">Fiche Wiki</a>
+                </span>
+                <details class="tips">
+                    <summary>💡 Conseils</summary>
+                    <ul>
+                        <li>Ne laissez jamais un Gestionnaire (Manager) inactif : c'est le goulot d'étranglement de toute la chaîne usines → expédition → vente.</li>
+                        <li>Montez d'abord les Managers avec vos Pots d'Or avant d'investir vos Trèfles dans le niveau des bâtiments, sinon vous produisez sans pouvoir vendre.</li>
+                        <li>Dépensez vos Fortune Coins dans la Chambre de la Chance sur les récompenses qui vous manquent plutôt que de laisser au hasard.</li>
+                    </ul>
+                </details>
+            </li>
+            <li data-aos="fade-up">
+                <span class="ev-date">31 mars - 21 avril</span>
+                <span class="ev-name">Événement du 14e Anniversaire</span>
+                <span class="ev-reward">Mini-jeu de fusion de gemmes (Énergie → Gemmes) —
+                    <a href="https://fr.wiki.forgeofempires.com/index.php?search=14e+anniversaire" target="_blank">Fiche Wiki</a>
+                </span>
+                <details class="tips">
+                    <summary>💡 Conseils</summary>
+                    <ul>
+                        <li>Ne spawnez pas de gemmes sans réfléchir : gardez de l'Énergie pour quand le plateau a de la place libre, sinon vous gaspillez vos spawns.</li>
+                        <li>Fusionnez d'abord les gemmes de bas niveau pour dégager de l'espace avant de viser les demi-clés.</li>
+                        <li>Les gemmes de haut niveau ont un taux d'apparition plus faible : ne comptez pas dessus tôt, misez sur des fusions régulières plutôt que la chance.</li>
+                    </ul>
+                </details>
+            </li>
+            <li data-aos="fade-up">
+                <span class="ev-date">18 juin (Bêta : 15 mai) - mi-juillet environ</span>
+                <span class="ev-name">King Arthur's Return</span>
+                <span class="ev-reward">Événement narratif unique (Excalibur, Camelot) —
+                    <a href="https://fr.wiki.forgeofempires.com/index.php?search=King+Arthur%27s+Return" target="_blank">Fiche Wiki</a>
+                </span>
+                <details class="tips">
+                    <summary>💡 Conseils</summary>
+                    <ul>
+                        <li>⚠️ C'est un événement narratif qui ne se joue qu'une seule fois (pas de répétition) : ne le lancez que si vous avez au moins 10 jours devant vous pour atteindre le 1ᵉʳ palier et reforger Excalibur.</li>
+                        <li>Jouez-le régulièrement plutôt qu'en un seul marathon : l'histoire se déroule en plusieurs chapitres (Arthur, Merlin, Morgane).</li>
+                        <li>Utilisez les Super Boards dès qu'ils apparaissent pour maximiser votre Faveur Royale.</li>
+                    </ul>
+                </details>
+            </li>
+            <li data-aos="fade-up">
+                <span class="ev-date">Avril - Juin (dates à confirmer)</span>
+                <span class="ev-name">Événement du Printemps</span>
+                <span class="ev-reward">Aucune annonce officielle confirmée trouvée pour ce créneau — à ajuster si un événement a eu lieu sur Rugnir.</span>
+            </li>
+            <li data-aos="fade-up">
+                <span class="ev-date">30 juillet - environ 20 août</span>
+                <span class="ev-name">Agir pour Demain (Care for Tomorrow)</span>
+                <span class="ev-reward">Bâtiment principal : Tour de Purification —
+                    <a href="https://fr.wiki.forgeofempires.com/index.php?search=Tour+de+Purification" target="_blank">Fiche Wiki</a>
+                </span>
+                <details class="tips">
+                    <summary>💡 Conseils</summary>
+                    <ul>
+                        <li>Le système de série de coffres (Bronze → Argent → Or → Platine → Diamant) récompense la régularité : complétez au moins un plateau par jour pour ne pas casser votre série.</li>
+                        <li>Gardez vos pièces Arc-en-ciel pour les transformer au bon moment (quand elles complètent une combinaison utile), pas dès que possible.</li>
+                        <li>Participez au Défi Mondial avec la guilde : chaque palier débloque des récompenses bonus pour tous les membres.</li>
+                    </ul>
+                </details>
+            </li>
+            <li data-aos="fade-up">
+                <span class="ev-date">31 août - 21 septembre</span>
+                <span class="ev-name">Événement Automnal — Hall de la Récolte</span>
+                <span class="ev-reward">Bâtiment principal : Arrêt / Station / Terminal Momiji + Bar à Ramen (voir ci-dessus)</span>
+                <details class="tips">
+                    <summary>💡 Conseils</summary>
+                    <ul>
+                        <li>Attendez les gros groupes (5-6 tuiles) avant de popper plutôt que de cliquer sur chaque paire : les Reward Jars à haute étoile rapportent bien plus.</li>
+                        <li>N'utilisez le multiplicateur 2x/3x Cuillères que si vous avez assez de Sacs de Farine pour suivre le coût des boosters, sinon restez en 1x.</li>
+                        <li>Dans le Hall de la Récolte, gardez vos Sceaux du Boulanger pour le Bar à Ramen si vous manquez de production de biens, ou pour finir votre Festin des Cultures Dorées si vous jouez sur la durée.</li>
+                        <li>La boutique ferme sur son propre timer, différent de la fin de l'événement : dépensez vos Sceaux avant la fermeture.</li>
+                    </ul>
+                </details>
+            </li>
+            <li data-aos="fade-up">
+                <span class="ev-date">31 août - 21 septembre (en parallèle)</span>
+                <span class="ev-name">Fellowship 2026</span>
+                <span class="ev-reward">Bâtiment principal : Hearthglen Wayhouse —
+                    <a href="https://fr.wiki.forgeofempires.com/index.php?search=Fellowship+Event" target="_blank">Fiche Wiki</a>
+                </span>
+                <details class="tips">
+                    <summary>💡 Conseils</summary>
+                    <ul>
+                        <li>La boucle est Boutique (production) → Chariot (collecte/transport) → Salle du Banquet (livraison contre Gemmes) : ne laissez jamais une boutique inactive, c'est le facteur limitant.</li>
+                        <li>Un nouvel Allié Historique de Science apparaît cette année en plus du militaire : choisissez selon les besoins réels de votre ville plutôt que par réflexe.</li>
+                    </ul>
+                </details>
+            </li>
+            <li class="upcoming" data-aos="fade-up">
+                <span class="ev-date">Octobre (à venir)</span>
+                <span class="ev-name">Événement d'Halloween</span>
+                <span class="ev-reward">Dates et récompenses à confirmer</span>
+            </li>
+            <li class="upcoming" data-aos="fade-up">
+                <span class="ev-date">Novembre / Décembre (à venir)</span>
+                <span class="ev-name">Événements de Fin d'Année (Hiver)</span>
+                <span class="ev-reward">Dates et récompenses à confirmer</span>
+            </li>
+        </ul>
+
+        <p class="note-box">
+            ⚠️ Dates indicatives basées sur les annonces officielles InnoGames (serveurs live / bêta) — elles
+            peuvent varier de quelques jours selon les serveurs. Les événements marqués "à venir" ou "à confirmer"
+            seront complétés dès qu'ils sont annoncés ou que tu me confirmes les dates vues sur Rugnir.
+        </p>
+    </section>
+
     <section id="membres" class="royal-card" data-aos="fade-up">
         <h2>La Lignée (Membres)</h2>
-        <div class="grid-monarques">
-            <div class="member-slot">CoinCoinFoudroyé</div>
-            <div class="member-slot">ouuuaaaa</div>
-            <div class="member-slot">Crabi lapinou yeti</div>
-            <div class="member-slot">florentdu54</div>
-            <div class="member-slot">leodagan le sanguin</div>
-            <div class="member-slot">Le Paladin</div>
+
+        <div class="membres-wrapper">
+
+            <div class="grid-monarques">
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/2347556" target="_blank" rel="noopener">gege5014</a>
+                    <span class="member-title" onclick="openShield('gege5014', '🔥 En pousse-pousse', 'Premier contributeur du Royaume avec plus de 2,7 milliards de points. Un pilier incontournable des Monarques, toujours en tête de la course.', 'avatars/gege5014.png')">🔥 En pousse-pousse</span>
+                </div>
+
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/851617007" target="_blank" rel="noopener">MagressionDeFoi-Gracieux</a>
+                    <span class="member-title" onclick="openShield('MagressionDeFoi-Gracieux', 'Miam le magrett (et slurp mapo)', 'Grand gourmet de la cour et membre de longue date, toujours prêt à donner un coup de main entre deux bons petits plats.', 'avatars/magression.png')">Miam le magrett (et slurp mapo)</span>
+                </div>
+
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/852053582" target="_blank" rel="noopener">.Shin.Kuro.</a>
+                    <span class="member-title" onclick="openShield('.Shin.Kuro.', 'The Eminence Mapo 🎖️', 'Figure respectée de la guilde, reconnue pour sa constance et son investissement au fil des saisons.', 'avatars/shinkuro.png')">The Eminence Mapo 🎖️</span>
+                </div>
+
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/454353" target="_blank" rel="noopener">Famous Lisbeth</a>
+                    <span class="member-title" onclick="openShield('Famous Lisbeth', 'Lisbeth l\'Intouchable 🛡️🚀', 'Une défense de fer et une progression fulgurante : Lisbeth avance vite et ne laisse rien passer.', 'avatars/famouslisbeth.png')">Lisbeth l'Intouchable 🛡️🚀</span>
+                </div>
+
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/14709" target="_blank" rel="noopener">Lancaster</a>
+                    <span class="member-title" onclick="openShield('Lancaster', 'Le Magicien du CBG 🎩', 'Stratège hors pair en Combat de Bataille de Guilde, il retourne les situations les plus délicates.', 'avatars/lancaster.png')">Le Magicien du CBG 🎩</span>
+                </div>
+
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/8076704" target="_blank" rel="noopener">Marco Ferouj</a>
+                    <span class="member-title" onclick="openShield('Marco Ferouj', 'L\'explorateur 🧭', 'Toujours en mouvement, il arpente les Incursions et les Expéditions à la recherche de nouvelles conquêtes.', 'avatars/marcoferouj.png')">L'explorateur 🧭</span>
+                </div>
+
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/7718346" target="_blank" rel="noopener">roddhh23</a>
+                    <span class="member-title" onclick="openShield('roddhh23', 'Hot-Rod 🔥🚗', 'Rapide et ambitieux, roddhh23 fonce sans jamais lever le pied sur la route de la gloire.', 'avatars/roddhh23.png')">Hot-Rod 🔥🚗</span>
+                </div>
+
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/851502909" target="_blank" rel="noopener">Gustave de RIMK</a>
+                    <span class="member-title" onclick="openShield('Gustave de RIMK', 'Gus le Conquérant 🧭⚔️', 'Un noble ambitieux qui avance conquête après conquête au service du Royaume.', 'avatars/gustave.png')">Gus le Conquérant 🧭⚔️</span>
+                </div>
+
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/852259705" target="_blank" rel="noopener">Hestia-</a>
+                    <span class="member-title" onclick="openShield('Hestia-', 'La Gardienne du Feu 🔥🏠', 'Veille sur le foyer de la guilde avec dévouement, discrète mais toujours présente.', 'avatars/hestia.png')">La Gardienne du Feu 🔥🏠</span>
+                </div>
+
+                <div class="member-slot">
+                    <a class="member-name" href="https://foe-data.ovh/world/fr17/player/2209655" target="_blank" rel="noopener">Clint76</a>
+                    <span class="member-title" onclick="openShield('Clint76', 'L\'As de la Gâchette 🎯🔫', 'Un tireur d\'élite en Incursions Quantiques, précis et redoutable au combat.', 'avatars/clint76.png')">L'As de la Gâchette 🎯🔫</span>
+                </div>
+            </div>
+
+            <div class="royal-banner-container">
+                <a href="https://discord.gg/gcst6yuj4U" target="_blank">
+                    <img src="blasondesmonarques.png" alt="Blason des Monarques" class="royal-banner">
+                    <div class="banner-overlay">Rejoindre le Royaume</div>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -247,6 +796,16 @@
         <a href="https://discord.gg/gcst6yuj4U" target="_blank" class="cta-button">Contacter le Royaume</a>
     </section>
 
+</div>
+<div id="member-modal" class="modal-overlay" onclick="closeShield(event)">
+    <div class="modal-content royal-card">
+        <span class="close-btn">&times;</span>
+        <img id="modal-img" src="" alt="Portrait" class="profile-img">
+        <h2 id="modal-name">Nom</h2>
+        <h3 id="modal-role">Rôle</h3>
+        <p id="modal-desc">Description...</p>
+        <button class="cta-button" onclick="document.getElementById('member-modal').style.display='none'">Retour à la Cour</button>
+    </div>
 </div>
 
 <footer>
@@ -323,7 +882,20 @@
             document.getElementById('theme-btn').innerText = '🌙';
         }
     }
-</script>
 
+    function openShield(name, role, desc, img) {
+        document.getElementById('modal-name').innerText = name;
+        document.getElementById('modal-role').innerText = role;
+        document.getElementById('modal-desc').innerText = desc;
+        document.getElementById('modal-img').src = img;
+        document.getElementById('member-modal').style.display = 'flex';
+    }
+
+    function closeShield(event) {
+        if (event.target.classList.contains('modal-overlay') || event.target.classList.contains('close-btn')) {
+            document.getElementById('member-modal').style.display = 'none';
+        }
+    }
+</script>
 </body>
 </html>
